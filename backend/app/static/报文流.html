@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>报文流 · 探栏</title>
+  <link rel="stylesheet" href="/styles.css"/>
+  <script src="/common.js"></script>
+</head>
+<body>
+  <div class="壳">
+    <header class="顶牌">
+      <h1>探栏</h1>
+      <div class="骨">传感报文装载 → 标定/质控门槛入栏 → 站点汇总物化 → 坏点旁路 → 栏账互证<br/>皮：环境监测传感站 · 不是潮切关窗，也不是对拍双轨</div>
+    </header>
+    <div class="门槛条" id="门槛条"></div>
+    <header class="顶牌" style="margin-bottom:10px">
+      <h1 style="font-size:22px">报文流</h1>
+      <div class="骨">装载后的传感报文命运流水。</div>
+    </header>
+
+    <section class="卷">
+      <div class="横排 下距12" id="命运统计"></div>
+      <div class="表绕"><table><thead><tr><th>报文编号</th><th>站点</th><th>指标</th><th>读数</th><th>观测时</th><th>命运</th></tr></thead><tbody id="表"></tbody></table></div>
+    </section>
+    <section class="卷"><div class="双栏"><p class="说明">报文是装载入流。命运应可读：已装载→已入栏/已坏点→已汇总。</p><div class="侧注">子方向：采集入库质控。行业皮：环境监测传感站。</div></div></section>
+    <script>
+    (async () => {
+      const fate = await 探栏.getJSON("/api/统计/报文命运");
+      const box = document.getElementById("命运统计");
+      box.innerHTML = Object.entries(fate).map(([k,v]) =>
+        `<div class="水卡"><div class="数">${v}</div><div class="标">${探栏.安全文本(k)}</div></div>`
+      ).join("") || 探栏.空态("尚无命运统计");
+      const rows = await 探栏.getJSON("/api/观测报文");
+      const tb = document.getElementById("表");
+      if (!rows.length) { tb.innerHTML = `<tr><td colspan="6">${探栏.空态("尚无报文。回探栏台灌入栏成汇总样例。")}</td></tr>`; return; }
+      for (const r of rows) {
+        tb.appendChild(探栏.行(`<td>${探栏.安全文本(r.报文编号)}</td><td>${探栏.安全文本(r.站点键)}</td><td>${探栏.安全文本(r.指标键)}</td><td>${r.读数}</td><td>${探栏.安全文本(r.观测时)}</td><td>${探栏.徽章(r.命运)}</td>`));
+      }
+    })();
+    </script>
+
+  </div>
+
+  <nav class="底栏"><div class="底栏内">
+    <a href="/" >探栏台</a>
+    <a href="/报文流.html" class="亮">报文流</a>
+    <a href="/入栏缓冲.html" >入栏缓冲</a>
+    <a href="/站点汇总账.html" >站点汇总账</a>
+    <a href="/坏点匣.html" >坏点匣</a>
+    <a href="/栏贯验.html" >栏贯验</a>
+    <a href="/站点源.html" >站点源</a>
+    <a href="/栏规.html" >栏规</a>
+  </div></nav>
+
+  <script>
+  (async () => {
+    try {
+      const o = await 探栏.getJSON("/api/概览");
+      探栏.渲染门槛(document.getElementById("门槛条"), o.栏规 || {});
+    } catch (e) {}
+  })();
+  </script>
+</body>
+</html>

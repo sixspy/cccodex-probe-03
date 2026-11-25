@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>栏规 · 探栏</title>
+  <link rel="stylesheet" href="/styles.css"/>
+  <script src="/common.js">
+    async function 刷栏规页() {
+      const 规 = await 探栏.getJSON("/api/栏规");
+      const box = document.getElementById("栏规表") || document.getElementById("表");
+      if (box && box.tagName === "TBODY") {
+        box.innerHTML = "";
+        for (const [k,v] of Object.entries(规)) {
+          box.appendChild(探栏.行(`<td>${探栏.安全文本(k)}</td><td>${探栏.安全文本(v)}</td>`));
+        }
+      }
+      const checks = await 探栏.getJSON("/api/夹具/预检");
+      const tb = document.getElementById("夹具预检表");
+      if (tb) {
+        tb.innerHTML = "";
+        for (const c of checks) {
+          tb.appendChild(探栏.行(`<td>${探栏.安全文本(c.夹具)}</td><td>${c.报文数}</td><td>${c.是否可装?"是":"否"}</td><td>${探栏.安全文本(c.摘要||"—")}</td>`));
+        }
+      }
+    }
+    const saveBtn = document.getElementById("保存栏规");
+    if (saveBtn) {
+      saveBtn.onclick = async () => {
+        const el = document.getElementById("栏规回执");
+        try {
+          const body = {
+            "PM25上限": document.getElementById("PM25上限")?.value,
+            "PM25下限": document.getElementById("PM25下限")?.value,
+          };
+          Object.keys(body).forEach((k) => body[k] === undefined && delete body[k]);
+          el.textContent = JSON.stringify(await 探栏.postJSON("/api/栏规", body), null, 2);
+          await 刷栏规页();
+        } catch (e) { el.textContent = String(e); }
+      };
+    }
+    const refreshBtn = document.getElementById("刷新栏规");
+    if (refreshBtn) refreshBtn.onclick = () => 刷栏规页();
+    刷栏规页();
+  </script>
+</head>
+<body>
+  <div class="壳">
+    <header class="顶牌">
+      <h1>探栏</h1>
+      <div class="骨">传感报文装载 → 标定/质控门槛入栏 → 站点汇总物化 → 坏点旁路 → 栏账互证<br/>皮：环境监测传感站 · 不是潮切关窗，也不是对拍双轨</div>
+    </header>
+    <div class="门槛条" id="门槛条"></div>
+    <header class="顶牌" style="margin-bottom:10px">
+      <h1 style="font-size:22px">栏规</h1>
+      <div class="骨">当前栏号与质控阈值。</div>
+    </header>
+
+    <section class="卷"><h2>栏规原文</h2><pre class="回执" id="规">加载中…</pre><div class="工具 上距12">
+        <button class="按钮" id="保存栏规">保存栏规补丁</button>
+        <button class="按钮 次" id="刷新栏规">刷新</button>
+      </div>
+      <pre class="回执 上距12" id="栏规回执">改门槛只影响后续装载</pre>
+    </section>
+    <section class="卷">
+      <h2>夹具预检</h2>
+      <div class="表绕"><table><thead><tr><th>夹具</th><th>报文数</th><th>可装</th><th>摘要</th></tr></thead><tbody id="夹具预检表"></tbody></table></div>
+    </section>
+    <section class="卷"><h2>空桩目录</h2><p class="说明" id="空桩"></p>
+      <div class="双栏"><p class="说明">栏规钉死当前栏与 PM25 上下限。分指标门槛属于空桩。</p>
+      <div class="侧注">版式：底栏铜青。潮切是左侧窗时间轴浅纸底。</div></div>
+    </section>
+    <script>
+    (async () => {
+      document.getElementById("规").textContent = JSON.stringify(await 探栏.getJSON("/api/栏规"), null, 2);
+      const s = await 探栏.getJSON("/api/空桩");
+      document.getElementById("空桩").textContent = "空桩 " + s.条数 + "：" + (s.空桩 || []).join(" · ");
+    })();
+    </script>
+
+  </div>
+
+  <nav class="底栏"><div class="底栏内">
+    <a href="/" >探栏台</a>
+    <a href="/报文流.html" >报文流</a>
+    <a href="/入栏缓冲.html" >入栏缓冲</a>
+    <a href="/站点汇总账.html" >站点汇总账</a>
+    <a href="/坏点匣.html" >坏点匣</a>
+    <a href="/栏贯验.html" >栏贯验</a>
+    <a href="/站点源.html" >站点源</a>
+    <a href="/栏规.html" class="亮">栏规</a>
+  </div></nav>
+
+  <script>
+  (async () => {
+    try {
+      const o = await 探栏.getJSON("/api/概览");
+      探栏.渲染门槛(document.getElementById("门槛条"), o.栏规 || {});
+    } catch (e) {}
+  })();
+  </script>
+</body>
+</html>

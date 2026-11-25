@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>坏点匣 · 探栏</title>
+  <link rel="stylesheet" href="/styles.css"/>
+  <script src="/common.js"></script>
+</head>
+<body>
+  <div class="壳">
+    <header class="顶牌">
+      <h1>探栏</h1>
+      <div class="骨">传感报文装载 → 标定/质控门槛入栏 → 站点汇总物化 → 坏点旁路 → 栏账互证<br/>皮：环境监测传感站 · 不是潮切关窗，也不是对拍双轨</div>
+    </header>
+    <div class="门槛条" id="门槛条"></div>
+    <header class="顶牌" style="margin-bottom:10px">
+      <h1 style="font-size:22px">坏点匣</h1>
+      <div class="骨">未过质控门槛的报文旁路。</div>
+    </header>
+
+    <section class="卷">
+      <div class="表绕"><table><thead><tr><th>编号</th><th>报文编号</th><th>站点</th><th>原因</th><th>读数</th><th>观测时</th></tr></thead><tbody id="表"></tbody></table></div>
+    </section>
+    <script>
+    (async () => {
+      const rows = await 探栏.getJSON("/api/坏点匣");
+      const tb = document.getElementById("表");
+      if (!rows.length) { tb.innerHTML = `<tr><td colspan="6">${探栏.空态("坏点匣为空。灌坏点样例可看到越界旁路。")}</td></tr>`; return; }
+      for (const r of rows) {
+        tb.appendChild(探栏.行(`<td>${r.编号}</td><td>${探栏.安全文本(r.报文编号)}</td><td>${探栏.安全文本(r.站点键)}</td><td>${探栏.徽章(r.原因,"警")}</td><td>${r.读数}</td><td>${探栏.安全文本(r.观测时)}</td>`));
+      }
+    })();
+    </script>
+
+  </div>
+
+  <nav class="底栏"><div class="底栏内">
+    <a href="/" >探栏台</a>
+    <a href="/报文流.html" >报文流</a>
+    <a href="/入栏缓冲.html" >入栏缓冲</a>
+    <a href="/站点汇总账.html" >站点汇总账</a>
+    <a href="/坏点匣.html" class="亮">坏点匣</a>
+    <a href="/栏贯验.html" >栏贯验</a>
+    <a href="/站点源.html" >站点源</a>
+    <a href="/栏规.html" >栏规</a>
+  </div></nav>
+
+  <script>
+  (async () => {
+    try {
+      const o = await 探栏.getJSON("/api/概览");
+      探栏.渲染门槛(document.getElementById("门槛条"), o.栏规 || {});
+    } catch (e) {}
+  })();
+  </script>
+</body>
+</html>

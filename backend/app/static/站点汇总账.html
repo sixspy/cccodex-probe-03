@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>站点汇总账 · 探栏</title>
+  <link rel="stylesheet" href="/styles.css"/>
+  <script src="/common.js"></script>
+</head>
+<body>
+  <div class="壳">
+    <header class="顶牌">
+      <h1>探栏</h1>
+      <div class="骨">传感报文装载 → 标定/质控门槛入栏 → 站点汇总物化 → 坏点旁路 → 栏账互证<br/>皮：环境监测传感站 · 不是潮切关窗，也不是对拍双轨</div>
+    </header>
+    <div class="门槛条" id="门槛条"></div>
+    <header class="顶牌" style="margin-bottom:10px">
+      <h1 style="font-size:22px">站点汇总账</h1>
+      <div class="骨">结栏后按站点+指标物化的汇总。</div>
+    </header>
+
+    <section class="卷">
+      <div class="工具"><button class="按钮 青" id="结">结当前栏</button></div>
+      <div class="表绕"><table><thead><tr><th>汇总编号</th><th>栏号</th><th>站点</th><th>指标</th><th>报文数</th><th>均值</th></tr></thead><tbody id="表"></tbody></table></div>
+    </section>
+    <script>
+    async function 刷() {
+      const rows = await 探栏.getJSON("/api/站点汇总账");
+      const tb = document.getElementById("表"); tb.innerHTML = "";
+      if (!rows.length) { tb.innerHTML = `<tr><td colspan="6">${探栏.空态("尚无汇总。入栏后点结当前栏。")}</td></tr>`; return; }
+      for (const r of rows) {
+        tb.appendChild(探栏.行(`<td>${探栏.安全文本(r.汇总编号)}</td><td>${探栏.安全文本(r.栏号)}</td><td>${探栏.安全文本(r.站点键)}</td><td>${探栏.安全文本(r.指标键)}</td><td>${r.报文数}</td><td>${r.均值}</td>`));
+      }
+    }
+    document.getElementById("结").onclick = async () => { await 探栏.postJSON("/api/结栏/跑"); await 刷(); };
+    刷();
+    </script>
+
+  </div>
+
+  <nav class="底栏"><div class="底栏内">
+    <a href="/" >探栏台</a>
+    <a href="/报文流.html" >报文流</a>
+    <a href="/入栏缓冲.html" >入栏缓冲</a>
+    <a href="/站点汇总账.html" class="亮">站点汇总账</a>
+    <a href="/坏点匣.html" >坏点匣</a>
+    <a href="/栏贯验.html" >栏贯验</a>
+    <a href="/站点源.html" >站点源</a>
+    <a href="/栏规.html" >栏规</a>
+  </div></nav>
+
+  <script>
+  (async () => {
+    try {
+      const o = await 探栏.getJSON("/api/概览");
+      探栏.渲染门槛(document.getElementById("门槛条"), o.栏规 || {});
+    } catch (e) {}
+  })();
+  </script>
+</body>
+</html>

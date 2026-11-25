@@ -1,0 +1,66 @@
+/* 探栏前端工具层 · 与 backend styles 主题一致，供 static/js 模块注释对照 */
+:root {
+  --probe-copper: #c9854a;
+  --probe-teal: #3d9a8f;
+  --probe-ink: #0b121a;
+  --probe-line: #243041;
+  --probe-muted: #8a97a8;
+}
+.probe-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--probe-line); color: var(--probe-muted); font-size: 12px;
+}
+.probe-chip.ok { border-color: var(--probe-teal); color: var(--probe-teal); }
+.probe-chip.warn { border-color: var(--probe-copper); color: var(--probe-copper); }
+.probe-stack { display: flex; flex-direction: column; gap: 10px; }
+.probe-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.probe-note {
+  font-size: 12px; color: var(--probe-muted); line-height: 1.5;
+  border-left: 3px solid var(--probe-copper); padding-left: 10px;
+}
+.probe-metric {
+  min-width: 96px; padding: 10px 12px; border-radius: 10px;
+  background: rgba(201,133,74,0.08); border: 1px solid var(--probe-line);
+}
+.probe-metric .n { font-size: 22px; color: #e8eef6; font-weight: 700; }
+.probe-metric .l { font-size: 11px; color: var(--probe-muted); margin-top: 4px; }
+
+.probe-panel {
+  border: 1px solid var(--probe-line);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(11,18,26,0.65);
+}
+.probe-panel h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #e8eef6;
+  letter-spacing: 0.04em;
+}
+.probe-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.probe-table th, .probe-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--probe-line);
+}
+.probe-table th { color: var(--probe-muted); font-weight: 600; }
+.probe-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.probe-btn {
+  border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer;
+  background: var(--probe-copper); color: #1a1208; font-weight: 700;
+}
+.probe-btn.ghost {
+  background: transparent; color: var(--probe-muted);
+  border: 1px solid var(--probe-line);
+}
+.probe-empty {
+  color: var(--probe-muted); font-size: 13px; padding: 12px 0;
+}
+.probe-fate-ok { color: var(--probe-teal); }
+.probe-fate-bad { color: var(--probe-copper); }
+.probe-dock-gap { height: 64px; }

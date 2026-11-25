@@ -1,0 +1,248 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+SC:wght@400;600;700&display=swap");
+:root {
+  --bg: #0e141c;
+  --panel: #172230;
+  --ink: #e7eef7;
+  --muted: #8b9bb0;
+  --line: #2a3a4d;
+  --copper: #d0894a;
+  --copper-soft: #e2b07a;
+  --teal: #3aa6a0;
+  --danger: #d16b6b;
+  --ok: #6cbc8a;
+  --dock: #0a1018;
+  --font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --display: "Space Grotesk", "Noto Sans SC", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(900px 420px at 90% -10%, rgba(208,137,74,0.16), transparent 55%),
+    linear-gradient(180deg, #121a26, var(--bg));
+  padding-bottom: 78px;
+}
+a { color: var(--teal); text-decoration: none; }
+.壳 { max-width: 1100px; margin: 0 auto; padding: 22px 20px 28px; }
+.顶牌 { margin-bottom: 18px; }
+.顶牌 h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 30px;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+.顶牌 .骨 { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.55; max-width: 760px; }
+.门槛条 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 14px 0 18px;
+}
+.门槛卡 {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(0,0,0,0.22);
+}
+.门槛卡 .k { color: var(--copper-soft); font-size: 11px; letter-spacing: 0.08em; }
+.门槛卡 .v { margin-top: 6px; font-family: var(--display); font-size: 18px; font-weight: 700; }
+.卷 {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+}
+.卷 h2 { margin: 0 0 10px; font-size: 16px; }
+.说明 { color: var(--muted); font-size: 13px; line-height: 1.55; }
+.水位 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.水卡 {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  background: #121c28;
+}
+.水卡 .数 { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--copper); }
+.水卡 .标 { margin-top: 4px; color: var(--muted); font-size: 12px; }
+.工具 { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.按钮 {
+  appearance: none; border: 0; border-radius: 999px; padding: 9px 16px;
+  background: var(--copper); color: #2a1600; font-weight: 700; cursor: pointer; font-family: var(--font);
+}
+.按钮.次 { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.按钮.青 { background: var(--teal); color: #04221f; }
+.表绕 { overflow: auto; border: 1px solid var(--line); border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { background: #121c28; color: var(--muted); position: sticky; top: 0; }
+.徽章 {
+  display: inline-block; padding: 2px 9px; border-radius: 4px; font-size: 12px;
+  background: rgba(58,166,160,0.16); color: var(--teal);
+}
+.徽章.警 { background: rgba(208,137,74,0.18); color: var(--copper); }
+.徽章.危 { background: rgba(209,107,107,0.16); color: var(--danger); }
+.徽章.好 { background: rgba(108,188,138,0.14); color: var(--ok); }
+.回执 {
+  margin: 0; padding: 12px; background: #0a1018; color: #d7e0ea;
+  border-radius: 10px; font-size: 12px; overflow: auto; max-height: 260px; white-space: pre-wrap;
+}
+.阶段 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.阶卡 {
+  border: 1px dashed var(--line); border-radius: 12px; padding: 12px; min-height: 100px; background: rgba(0,0,0,0.15);
+}
+.阶卡 .序 { color: var(--copper); font-family: var(--display); font-size: 12px; font-weight: 700; }
+.阶卡 b { display: block; margin: 6px 0; }
+.阶卡 span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+.双栏 { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 12px; }
+.侧注 {
+  border-left: 3px solid var(--copper); padding: 10px 12px;
+  background: rgba(208,137,74,0.08); color: var(--muted); font-size: 13px; line-height: 1.5;
+}
+.底栏 {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: rgba(10,16,24,0.96);
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+.底栏内 {
+  max-width: 1100px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; padding: 10px 12px;
+}
+.底栏 a {
+  flex: 0 0 auto; padding: 8px 12px; border-radius: 999px; color: var(--muted);
+  border: 1px solid transparent; font-size: 13px; white-space: nowrap;
+}
+.底栏 a.亮, .底栏 a:hover {
+  color: #fff; border-color: var(--copper); background: rgba(208,137,74,0.14);
+}
+.登录壳 { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-bottom: 0; }
+.登录左 {
+  background:
+    radial-gradient(500px 360px at 30% 20%, rgba(208,137,74,0.28), transparent 60%),
+    linear-gradient(160deg, #1a2738, #0e141c);
+  color: #fff; padding: 48px 40px; display: flex; flex-direction: column; justify-content: center;
+}
+.登录左 h1 { margin: 0; font-family: var(--display); font-size: 46px; letter-spacing: 0.08em; }
+.登录左 p { color: #b7c4d2; max-width: 420px; line-height: 1.6; }
+.登录右 { display: grid; place-items: center; padding: 24px; background: #121a24; }
+.登录卡 {
+  width: min(380px, 92vw); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 16px; padding: 28px 24px;
+}
+.登录卡 h2 { margin: 0 0 6px; font-family: var(--display); }
+.登录卡 .副 { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+.登录卡 label { display: block; margin: 10px 0 4px; color: var(--muted); font-size: 12px; }
+.登录卡 input {
+  width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line);
+  background: #0e1620; color: var(--ink); font: inherit;
+}
+.登录卡 .按钮 { width: 100%; margin-top: 16px; }
+@media (max-width: 900px) {
+  .水位, .阶段, .门槛条, .双栏, .登录壳 { grid-template-columns: 1fr; }
+}
+
+/* 加厚工具类 */
+.行距紧 { line-height: 1.35; }
+.行距松 { line-height: 1.7; }
+.字小 { font-size: 12px; }
+.字中 { font-size: 14px; }
+.字大 { font-size: 18px; }
+.铜字 { color: var(--copper); }
+.青字 { color: var(--teal); }
+.危字 { color: var(--danger); }
+.淡底 { background: rgba(255,255,255,0.03); }
+.圆角8 { border-radius: 8px; }
+.圆角12 { border-radius: 12px; }
+.垫8 { padding: 8px; }
+.垫12 { padding: 12px; }
+.垫16 { padding: 16px; }
+.上距8 { margin-top: 8px; }
+.上距12 { margin-top: 12px; }
+.上距16 { margin-top: 16px; }
+.下距8 { margin-bottom: 8px; }
+.下距12 { margin-bottom: 12px; }
+.下距16 { margin-bottom: 16px; }
+.横排 { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.竖排 { display: flex; flex-direction: column; gap: 8px; }
+.分割线 { border-top: 1px solid var(--line); margin: 12px 0; }
+.只读框 {
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  background: #0a1018; color: var(--muted); font-size: 12px;
+}
+.焦点环:focus { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+/* 加厚阶段卡与回执 */
+.阶段 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.阶卡 {
+  border: 1px solid var(--line); border-radius: 14px; padding: 14px;
+  background: linear-gradient(180deg, rgba(208,137,74,0.08), rgba(0,0,0,0.18));
+  min-height: 110px;
+}
+.阶卡 .序 {
+  font-family: var(--display); font-size: 12px; letter-spacing: 0.12em;
+  color: var(--copper-soft); margin-bottom: 6px;
+}
+.阶卡 b { display: block; margin-bottom: 6px; font-size: 15px; }
+.阶卡 span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.水位 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 10px 0 14px; }
+.水卡 {
+  border: 1px solid var(--line); border-radius: 12px; padding: 14px;
+  background: rgba(0,0,0,0.25);
+}
+.水卡 .数 { font-family: var(--display); font-size: 28px; color: #fff; }
+.水卡 .标 { margin-top: 4px; color: var(--muted); font-size: 12px; }
+.工具 { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.按钮 {
+  border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer;
+  background: var(--copper); color: #1a1208; font-weight: 700; font-family: var(--font);
+}
+.按钮.次 { background: #243447; color: var(--ink); font-weight: 600; }
+.按钮.青 { background: var(--teal); color: #041512; }
+.回执 {
+  margin: 0; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line);
+  background: #0a1018; color: var(--muted); font-size: 12px; white-space: pre-wrap;
+  max-height: 220px; overflow: auto;
+}
+.卷 {
+  border: 1px solid var(--line); border-radius: 16px; padding: 16px 16px 14px;
+  background: rgba(23,34,48,0.72); margin-bottom: 14px;
+}
+.卷 h2 { margin: 0 0 10px; font-size: 15px; letter-spacing: 0.04em; }
+.表绕 { overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+th { color: var(--muted); font-weight: 600; background: rgba(0,0,0,0.2); }
+.徽章 {
+  display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px;
+  border: 1px solid var(--line); color: var(--muted);
+}
+.徽章.ok { border-color: var(--ok); color: var(--ok); }
+.徽章.warn { border-color: var(--copper); color: var(--copper-soft); }
+.底栏 {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 58px;
+  background: var(--dock); border-top: 1px solid var(--line); z-index: 20;
+}
+.底栏内 {
+  max-width: 1100px; margin: 0 auto; height: 100%;
+  display: flex; align-items: center; gap: 6px; padding: 0 12px; overflow-x: auto;
+}
+.底栏 a {
+  color: var(--muted); padding: 8px 10px; border-radius: 8px; white-space: nowrap; font-size: 13px;
+}
+.底栏 a.亮, .底栏 a:hover { color: #fff; background: rgba(208,137,74,0.16); }
+.双栏 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
+.侧注 {
+  border: 1px dashed var(--line); border-radius: 12px; padding: 12px;
+  color: var(--muted); font-size: 12px; line-height: 1.5;
+}
+.说明 { color: var(--muted); font-size: 13px; line-height: 1.55; }
+@media (max-width: 900px) {
+  .阶段, .水位, .门槛条, .双栏 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .阶段, .水位, .门槛条, .双栏 { grid-template-columns: 1fr; }
+}

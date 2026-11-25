@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <title>探栏登录</title>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+  <div class="登录壳">
+    <section class="登录左">
+      <h1>探栏</h1>
+      <p>环境监测传感站报文：过质控门槛才入栏，再按站点汇总。版式是底栏导航，不是潮切左侧时间轴，也不是对拍顶栏。</p>
+    </section>
+    <section class="登录右">
+      <form class="登录卡" method="get" action="/">
+        <h2>进入探栏台</h2>
+        <p class="副">默认账号 admin / 密码 123456</p>
+        <label>账号</label>
+        <input name="user" value="admin" autocomplete="username"/>
+        <label>密码</label>
+        <input name="password" type="password" value="123456" autocomplete="current-password"/>
+        <button class="按钮" type="submit">登录</button>
+      </form>
+    </section>
+  </div>
+</body>
+</html>
